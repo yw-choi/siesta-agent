@@ -1,0 +1,49 @@
+SystemName       {{ system_name }}
+SystemLabel      {{ system_label }}
+
+NumberOfSpecies  {{ n_species }}
+NumberOfAtoms    {{ n_atoms }}
+
+%block ChemicalSpeciesLabel
+{# index Z symbol pseudo #}
+{% for s in species %} {{ loop.index }}  {{ s.Z }}  {{ s.symbol }}  {{ s.pseudo }}
+{% endfor %}
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant  1.000 Ang
+%block LatticeVectors
+{{ a1[0] }} {{ a1[1] }} {{ a1[2] }}
+{{ a2[0] }} {{ a2[1] }} {{ a2[2] }}
+{{ a3[0] }} {{ a3[1] }} {{ a3[2] }}
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat Ang
+%block AtomicCoordinatesAndAtomicSpecies
+{% for atom in atoms %}
+{{ atom.x }}  {{ atom.y }}  {{ atom.z }}  {{ atom.species_index }}
+{% endfor %}
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+XC.functional       GGA
+XC.authors          PBE
+
+MeshCutoff          {{ mesh_cutoff_ry }} Ry
+PAO.BasisSize       {{ basis_size }}
+DM.Tolerance        1.d-4
+MaxSCFIterations    200
+ElectronicTemperature {{ elec_temp_k }} K
+
+%block kgrid_Monkhorst_Pack
+{{ kx }} 0   0   0.0
+0   {{ ky }} 0   0.0
+0    0  {{ kz }} 0.0
+%endblock kgrid_Monkhorst_Pack
+
+{% if do_relax %}
+MD.TypeOfRun          CG
+MD.MaxForceTol        {{ max_force_tol }} eV/Ang
+MD.NumCGsteps         200
+{% endif %}
+
+SaveHS                T
+WriteCoorXmol         T

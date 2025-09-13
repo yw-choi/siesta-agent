@@ -1,0 +1,51 @@
+SystemName       graphene_relax
+SystemLabel      graphene_relax
+
+NumberOfSpecies  1
+NumberOfAtoms    2
+
+%block ChemicalSpeciesLabel
+
+ 1  6  C  C.psml
+
+%endblock ChemicalSpeciesLabel
+
+LatticeConstant  1.000 Ang
+%block LatticeVectors
+2.46 0 0
+1.23 2.13163 0
+0 0 20.0
+%endblock LatticeVectors
+
+AtomicCoordinatesFormat Ang
+%block AtomicCoordinatesAndAtomicSpecies
+
+0.0  0.0  0.0  1
+
+1.64  1.421087  0.0  1
+
+%endblock AtomicCoordinatesAndAtomicSpecies
+
+XC.functional       GGA
+XC.authors          PBE
+
+MeshCutoff          250 Ry
+PAO.BasisSize       DZP
+DM.Tolerance        1.d-4
+MaxSCFIterations    200
+ElectronicTemperature 300 K
+
+%block kgrid_Monkhorst_Pack
+24 0   0   0.0
+0   24 0   0.0
+0    0  1 0.0
+%endblock kgrid_Monkhorst_Pack
+
+
+MD.TypeOfRun          CG
+MD.MaxForceTol        0.02 eV/Ang
+MD.NumCGsteps         200
+
+
+SaveHS                T
+WriteCoorXmol         T

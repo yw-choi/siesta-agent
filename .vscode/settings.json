@@ -1,0 +1,12 @@
+{
+  "python.defaultInterpreterPath": "python3",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "files.associations": {
+    "*.fdf": "ini"
+  },
+  "editor.rulers": [
+    100
+  ],
+  "git.confirmSync": false,
+  "remote.SSH.useLocalServer": false
+}

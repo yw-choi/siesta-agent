@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SIESTA: build fdf (relax)",
+      "type": "shell",
+      "command": "python3 tools/build_fdf.py --calc relax --structure examples/Si.xyz --pseudodb examples/pseudopotentials/map.json --k 8,8,8 --mesh 200 --basis DZP --label job",
+      "problemMatcher": []
+    },
+    {
+      "label": "SIESTA: mpirun -np 64",
+      "type": "shell",
+      "command": "python3 tools/run_siesta.py --np 64 --fdf in.fdf",
+      "dependsOn": [
+        "SIESTA: build fdf (relax)"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "SIESTA: parse & plots",
+      "type": "shell",
+      "command": "python3 tools/parse_outputs.py && ( test -f EIG && python3 tools/plot_band.py ) || true",
+      "dependsOn": [
+        "SIESTA: mpirun -np 64"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
